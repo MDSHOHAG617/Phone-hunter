@@ -47,7 +47,7 @@ const loadSearch = () => {
     }
     /* Chking Errors */
     else {
-        error.innerText = "No resuls found";
+        error.innerText = "No results found";
     }
 }
 /* Catching Phones Id number */
