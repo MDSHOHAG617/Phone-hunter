@@ -4,23 +4,20 @@ const loadSearch = () => {
     searcInput.value = "";
     // console.log(input)
     if (input == "") {
-        alert("no result found")
+        // alert("no result found")
+        error.innerText = "please enter a Brand name";
     }
     else if (input == "samsung" || input == "iphone" || input == "oppo") {
+        error.innerText = "";
         const url = `https://openapi.programming-hero.com/api/phones?search=${input}`;
         fetch(url)
             .then(res => res.json())
             .then(data => displayResults(data.data.slice(0, 20)))
-
-
         const displayResults = phones => {
             // console.log(phones)
-
             const searchResult = document.getElementById('searchResult');
             searchResult.innerHTML = "";
             for (const phone of phones) {
-
-
                 const div = document.createElement('div');
                 div.innerHTML = ` <div class="col">
             <div class="card">
@@ -37,18 +34,14 @@ const loadSearch = () => {
                 </div>
             </div>
         </div>`
-
                 searchResult.appendChild(div)
             }
         }
-
     }
     else {
-        alert("Please Enter a valid Name (Brand)");
+        error.innerText = "please enter a valid Brand name";
     }
-
 }
-
 const loadDetails = phoneId => {
     console.log(phoneId);
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
@@ -58,7 +51,7 @@ const loadDetails = phoneId => {
 }
 
 const displsyDetails = phoneDetail => {
-    // console.table(phoneDetail);
+    console.table(phoneDetail);
     console.log(phoneDetail.image);
     const phoneDetails = document.getElementById('phone-detailes');
     const div = document.createElement('div');
@@ -69,14 +62,17 @@ const displsyDetails = phoneDetail => {
     div.innerHTML = `
     <img  class="w-50 text-center mx-auto my-2" src="${phoneDetail.image}" class="card-img-top" alt="...">
     <p class="mx-auto">Release Date: ${phoneDetail.releaseDate}</p>
+   
     <h5 class="card-title ms-4"> Model Name: ${phoneDetail.name}</h5>
     <p class="p-2 ms-3 mx-auto "><span class="fw-bold">Main Features:</span> ${phoneDetail.mainFeatures.storage},${phoneDetail.mainFeatures.displaySize},${phoneDetail.mainFeatures.chipSet} </p>
-    <p class="ms-4 mx-auto "><span class="fw-bold">Sensors:</span> ${phoneDetail.mainFeatures.sensors} </p>
+    <p class="ms-4  "><span class="fw-bold">Sensors:</span> ${phoneDetail.mainFeatures.sensors}</p>
     <p class="ms-3 p-2 mx-auto "><span class="fw-bold">Other's:</span><br>
    <span class="fw-bold">WLAN:</span> ${phoneDetail.others.WLAN}, 
    <span class="fw-bold">Bluetooth:</span> ${phoneDetail.others.Bluetooth},<span class="fw-bold"> GPS:</span> ${phoneDetail.others.GPS},<span class="fw-bold"> NFC:</span> ${phoneDetail.others.NFC},<span class="fw-bold"> Radio:</span> ${phoneDetail.others.Radio},<span class="fw-bold"> USB:</span> ${phoneDetail.others.USB} </p>
- 
-    
+
+  
     `;
+
     phoneDetails.appendChild(div);
+
 }
